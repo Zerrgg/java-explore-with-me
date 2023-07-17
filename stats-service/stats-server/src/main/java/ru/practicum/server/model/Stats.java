@@ -27,7 +27,7 @@ public class Stats {
     @Column(nullable = false)
     String uri;
 
-    @Column(name = "user_ip", nullable = false, length = 15)
+    @Column(name = "user_ip", nullable = false, length = 39)
     String ip;
 
     @Column(name = "created", nullable = false)

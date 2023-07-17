@@ -13,6 +13,8 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static ru.practicum.dto.GlobalConstants.*;
+
 @Validated
 @RestController
 @RequiredArgsConstructor
@@ -27,10 +29,10 @@ public class StatsController {
     }
 
     @GetMapping("/stats")
-    public List<ViewStatsDto> getStats(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
-                                    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
-                                    @RequestParam(required = false) List<String> uris,
-                                    @RequestParam(required = false, defaultValue = "false") Boolean unique) {
+    public List<ViewStatsDto> getStats(@RequestParam @DateTimeFormat(pattern = DT_FORMAT) LocalDateTime start,
+                                    @RequestParam @DateTimeFormat(pattern = DT_FORMAT) LocalDateTime end,
+                                    @RequestParam List<String> uris,
+                                    @RequestParam Boolean unique) {
         if (start.isAfter(end)) {
             throw new IllegalArgumentException("Недопустимый временной промежуток.");
         }

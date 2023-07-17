@@ -14,6 +14,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
+import static ru.practicum.dto.GlobalConstants.*;
+
 @Service
 public class StatsClient extends BaseClient {
 
@@ -33,7 +35,7 @@ public class StatsClient extends BaseClient {
                 .app(appName)
                 .uri(uri)
                 .ip(ip)
-                .timestamp(timestamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .timestamp(timestamp.format(DT_FORMATTER))
                 .build();
         return post("/hit", endpointHit);
     }
@@ -46,8 +48,8 @@ public class StatsClient extends BaseClient {
 
         StringBuilder uriBuilder = new StringBuilder("/stats/?start={start}&end={end}");
         Map<String, Object> parameters = Map.of(
-                "start", start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-                "end", end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                "start", start.format(DT_FORMATTER),
+                "end", end.format(DT_FORMATTER)
         );
 
         if (uris != null && !uris.isEmpty()) {

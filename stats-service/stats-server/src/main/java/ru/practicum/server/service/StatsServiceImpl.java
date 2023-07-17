@@ -10,9 +10,10 @@ import ru.practicum.server.model.ViewStats;
 import ru.practicum.server.repository.StatsRepository;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static ru.practicum.dto.GlobalConstants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class StatsServiceImpl implements StatsService {
     @Transactional
     public void addHit(EndpointHitDto endpointHit) {
         statsRepository.save(statsMapper.toStats(endpointHit,
-                LocalDateTime.parse(endpointHit.getTimestamp(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+                LocalDateTime.parse(endpointHit.getTimestamp(), DT_FORMATTER)));
     }
 
     @Override
