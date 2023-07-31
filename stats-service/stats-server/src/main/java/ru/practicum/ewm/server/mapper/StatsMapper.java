@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 public interface StatsMapper {
 
     StatsMapper INSTANCE = Mappers.getMapper(StatsMapper.class);
+
     default Stats toStats(EndpointHitDto endpointHit) {
         return Stats.builder()
                 .app(endpointHit.getApp())

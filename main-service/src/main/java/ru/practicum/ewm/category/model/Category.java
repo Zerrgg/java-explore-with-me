@@ -16,7 +16,7 @@ import static ru.practicum.ewm.dto.GlobalConstants.MAX_LENGTH_CATEGORY;
 @Table(name = "categories", schema = "public")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Category {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 

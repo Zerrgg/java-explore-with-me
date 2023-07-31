@@ -37,7 +37,7 @@ public class ParticipationRequestController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ParticipationRequestDto> getEventRequestsByRequester(@PathVariable Long userId){
+    public List<ParticipationRequestDto> getEventRequestsByRequester(@PathVariable Long userId) {
         log.info("GET запрос на получение заявок от пользователя с id = {} на участие в событиях.", userId);
         return participationRequestService.getEventRequestsByRequester(userId);
     }

@@ -95,8 +95,8 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
         List<ParticipationRequest> confirmedList = new ArrayList<>();
         List<ParticipationRequest> rejectedList = new ArrayList<>();
 
-        List<ParticipationRequest> requests = requestRepository.
-                findAllByIdIn(eventRequestStatusUpdateRequest.getRequestIds());
+        List<ParticipationRequest> requests = requestRepository
+                .findAllByIdIn(eventRequestStatusUpdateRequest.getRequestIds());
 
         if (requests.size() != eventRequestStatusUpdateRequest.getRequestIds().size()) {
             log.warn("Были найдены не все требуемые запросы на участие в событии");

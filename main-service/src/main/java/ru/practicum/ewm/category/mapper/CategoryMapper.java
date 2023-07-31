@@ -12,7 +12,7 @@ public interface CategoryMapper {
 
     Category newCategoryDtoToCategory(NewCategoryDto newCategoryDto);
 
-    default CategoryDto toCategoryDto(Category category){
+    default CategoryDto toCategoryDto(Category category) {
         return CategoryDto.builder()
                 .id(category.getId())
                 .name(category.getName())
