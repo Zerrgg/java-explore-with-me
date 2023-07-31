@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.dto.EndpointHitDto;
 import ru.practicum.ewm.dto.ViewStatsDto;
+import ru.practicum.ewm.server.exception.BadRequestException;
 import ru.practicum.ewm.server.mapper.StatsMapper;
 import ru.practicum.ewm.server.model.Stats;
 import ru.practicum.ewm.server.model.ViewStats;
@@ -33,7 +34,7 @@ public class StatsServiceImpl implements StatsService {
         List<ViewStats> list;
 
         if (start == null || end == null || start.isAfter(end)) {
-            throw new IllegalArgumentException("Недопустимый временной промежуток.");
+            throw new BadRequestException("Недопустимый временной промежуток.");
         }
 
         if (uris == null || uris.length == 0) {
