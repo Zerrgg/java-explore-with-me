@@ -1,7 +1,6 @@
 package ru.practicum.ewm.event.service;
 
 import org.springframework.data.domain.Pageable;
-import ru.practicum.ewm.dto.ViewStatsDto;
 import ru.practicum.ewm.event.dto.*;
 import ru.practicum.ewm.event.enums.EventSortType;
 import ru.practicum.ewm.event.enums.EventState;
@@ -10,7 +9,6 @@ import ru.practicum.ewm.event.model.Event;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 public interface EventService {
 

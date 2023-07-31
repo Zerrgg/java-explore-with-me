@@ -46,7 +46,6 @@ public class EventServiceImpl implements EventService {
     private final StatsClient statsClient;
     private final LocationRepository locationRepository;
     private final EventRepository eventRepository;
-    private final LocationMapper locationMapper;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
 
@@ -356,7 +355,7 @@ public class EventServiceImpl implements EventService {
     }
 
     private Location getOrSaveLocation(LocationDto locationDto) {
-        Location newLocation = locationMapper.toLocation(locationDto);
+        Location newLocation = LocationMapper.toLocation(locationDto);
         return locationRepository.findByLatAndLon(newLocation.getLat(), newLocation.getLon())
                 .orElseGet(() -> locationRepository.save(newLocation));
     }

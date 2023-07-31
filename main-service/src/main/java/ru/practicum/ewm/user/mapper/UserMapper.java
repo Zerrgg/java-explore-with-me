@@ -4,7 +4,6 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 import ru.practicum.ewm.user.dto.NewUserRequest;
 import ru.practicum.ewm.user.dto.UserDto;
-import ru.practicum.ewm.user.dto.UserShortDto;
 import ru.practicum.ewm.user.model.User;
 
 @Component
@@ -14,5 +13,4 @@ public interface UserMapper {
 
     UserDto toUserDto(User user);
 
-    UserShortDto toUserShortDto(User user);
 }

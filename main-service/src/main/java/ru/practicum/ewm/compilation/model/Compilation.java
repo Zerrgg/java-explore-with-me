@@ -9,7 +9,6 @@ import ru.practicum.ewm.event.model.Event;
 import javax.persistence.*;
 import java.util.List;
 
-import static ru.practicum.ewm.dto.GlobalConstants.MAX_LENGTH_TITLE;
 import static ru.practicum.ewm.dto.GlobalConstants.MAX_LENGTH_TITLE_COMPILATION;
 
 @Entity

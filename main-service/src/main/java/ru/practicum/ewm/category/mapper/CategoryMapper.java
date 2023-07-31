@@ -12,10 +12,6 @@ public interface CategoryMapper {
 
     Category newCategoryDtoToCategory(NewCategoryDto newCategoryDto);
 
-    Category categoryDtoToCategory(CategoryDto categoryDto);
-
-//    CategoryDto toCategoryDto(Category category);
-
     default CategoryDto toCategoryDto(Category category){
         return CategoryDto.builder()
                 .id(category.getId())

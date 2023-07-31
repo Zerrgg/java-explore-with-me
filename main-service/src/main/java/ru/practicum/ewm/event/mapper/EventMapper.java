@@ -98,55 +98,5 @@ public interface EventMapper {
                 .build();
     }
 
-
-//    default EventFullDto toEventFullDtoViews(Event event, Integer confirmedRequests, Long views) {
-//        return EventFullDto.builder()
-//                .id(event.getId())
-//                .annotation(event.getAnnotation())
-//                .category(CategoryDto.builder()
-//                        .id(event.getCategory().getId())
-//                        .name(event.getCategory().getName())
-//                        .build())
-//                .confirmedRequests(confirmedRequests)
-//                .createdOn(event.getCreatedOn())
-//                .description(event.getDescription())
-//                .eventDate(event.getEventDate())
-//                .initiator(UserShortDto.builder()
-//                        .id(event.getInitiator().getId())
-//                        .name(event.getInitiator().getName())
-//                        .build())
-//                .location(LocationDto.builder()
-//                        .lat(event.getLocation().getLat())
-//                        .lon(event.getLocation().getLon())
-//                        .build())
-//                .paid(event.getPaid())
-//                .participantLimit(event.getParticipantLimit())
-//                .publishedOn(event.getPublishedOn())
-//                .requestModeration(event.getRequestModeration())
-//                .state(event.getState())
-//                .title(event.getTitle())
-//                .views(views)
-//                .build();
-//    }
-//
-//    default EventShortDto toEventShortDtoViews(Event event, Integer confirmedRequests, Long views) {
-//        return EventShortDto.builder()
-//                .id(event.getId())
-//                .annotation(event.getAnnotation())
-//                .category(CategoryDto.builder()
-//                        .id(event.getCategory().getId())
-//                        .name(event.getCategory().getName())
-//                        .build())
-//                .confirmedRequests(confirmedRequests)
-//                .eventDate(event.getEventDate())
-//                .initiator(UserShortDto.builder()
-//                        .id(event.getInitiator().getId())
-//                        .name(event.getInitiator().getName())
-//                        .build())
-//                .paid(event.getPaid())
-//                .title(event.getTitle())
-//                .views(views)
-//                .build();
-//    }
 }
 
