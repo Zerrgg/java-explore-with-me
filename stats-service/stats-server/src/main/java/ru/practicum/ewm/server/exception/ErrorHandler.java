@@ -56,6 +56,17 @@ public class ErrorHandler {
                 LocalDateTime.now().format(DT_FORMATTER));
     }
 
+    @ExceptionHandler({IllegalArgumentException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleIllegalArgumentException(IllegalArgumentException exception) {
+        log.error(exception.toString());
+        return new ApiError(HttpStatus.BAD_REQUEST.name(),
+                "Incorrectly made request.",
+                exception.getMessage(),
+                getErrors(exception),
+                LocalDateTime.now().format(DT_FORMATTER));
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiError handleDataIntegrityViolationException(DataIntegrityViolationException exception) {
