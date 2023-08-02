@@ -19,7 +19,6 @@ import java.util.List;
 
 import static ru.practicum.ewm.dto.GlobalConstants.*;
 
-
 @Slf4j
 @Validated
 @RestController
