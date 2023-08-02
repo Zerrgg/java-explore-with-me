@@ -5,12 +5,14 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.practicum.ewm.category.model.Category;
+import ru.practicum.ewm.comments.model.Comment;
 import ru.practicum.ewm.event.enums.EventState;
 import ru.practicum.ewm.location.model.Location;
 import ru.practicum.ewm.user.model.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static ru.practicum.ewm.dto.GlobalConstants.*;
 
@@ -76,5 +78,8 @@ public class Event {
 
     @Column(name = "views")
     Long views;
+
+    @OneToMany(mappedBy = "event")
+    List<Comment> comments;
 
 }
