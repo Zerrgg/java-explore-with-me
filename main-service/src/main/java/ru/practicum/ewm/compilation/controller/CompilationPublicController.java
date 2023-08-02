@@ -25,8 +25,8 @@ public class CompilationPublicController {
     @ResponseStatus(HttpStatus.OK)
     public List<CompilationDto> getCompilations(
             @RequestParam(required = false) Boolean pinned,
-            @RequestParam(required = false, defaultValue = PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
-            @RequestParam(required = false, defaultValue = PAGE_DEFAULT_SIZE) @Positive Integer size) {
+            @RequestParam(defaultValue = PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
+            @RequestParam(defaultValue = PAGE_DEFAULT_SIZE) @Positive Integer size) {
         return compilationService.getCompilations(pinned, from, size);
     }
 

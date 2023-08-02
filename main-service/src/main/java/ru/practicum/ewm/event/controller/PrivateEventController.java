@@ -36,8 +36,8 @@ public class PrivateEventController {
     @ResponseStatus(HttpStatus.OK)
     public List<EventShortDto> getAllEventsByPrivate(
             @PathVariable Long userId,
-            @RequestParam(required = false, defaultValue = PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
-            @RequestParam(required = false, defaultValue = PAGE_DEFAULT_SIZE) @Positive Integer size) {
+            @RequestParam(defaultValue = PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
+            @RequestParam(defaultValue = PAGE_DEFAULT_SIZE) @Positive Integer size) {
         log.info("GET запрос на получение событий, добавленных пользователем");
         return eventService.getAllEventsByPrivate(userId, PageRequest.of(from / size, size));
     }

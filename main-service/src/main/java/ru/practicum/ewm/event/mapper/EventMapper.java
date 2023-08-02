@@ -20,7 +20,6 @@ import ru.practicum.ewm.user.mapper.UserMapper;
 import ru.practicum.ewm.user.model.User;
 
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 @Component
 @Mapper(uses = {UserMapper.class, CategoryMapper.class, ParticipationRequestMapper.class, LocationMapper.class},
@@ -76,7 +75,6 @@ public interface EventMapper {
                 .state(event.getState())
                 .title(event.getTitle())
                 .views(event.getViews())
-//                .comments(event.getComments().stream().map(CommentMapper.INSTANCE::toCommentDto).collect(Collectors.toList()))
                 .build();
     }
 
