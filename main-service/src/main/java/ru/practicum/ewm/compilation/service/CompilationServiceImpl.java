@@ -80,6 +80,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CompilationDto> getCompilations(Boolean pinned, Integer from, Integer size) {
         log.info("Получение подборки событий по параметрам: pinned {}, from {}, size {}", pinned, from, size);
         PageRequest pageRequest = PageRequest.of(from, size);
@@ -97,6 +98,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CompilationDto getCompilationById(Long compId) {
         log.info("Получение подборки событий с id = {}", compId);
         Compilation compilation = checkCompilation(compId);

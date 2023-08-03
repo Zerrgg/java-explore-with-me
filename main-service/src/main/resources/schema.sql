@@ -36,8 +36,7 @@ CREATE TABLE IF NOT EXISTS events
     state VARCHAR(32) DEFAULT 'PENDING',
     request_moderation BOOLEAN DEFAULT true,
     published_on TIMESTAMP WITHOUT TIME ZONE,
-    confirmed_requests INTEGER,
-    views BIGINT
+    confirmed_requests INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS requests

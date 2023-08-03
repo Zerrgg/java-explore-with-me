@@ -3,6 +3,7 @@ package ru.practicum.ewm.comments.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.comments.dto.CommentDto;
 import ru.practicum.ewm.comments.dto.NewCommentDto;
 import ru.practicum.ewm.comments.mapper.CommentMapper;
@@ -16,7 +17,7 @@ import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.repository.UserRepository;
 
-import javax.transaction.Transactional;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -51,11 +52,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CommentDto getComment(Long commentId) {
         return CommentMapper.INSTANCE.toCommentDto(getCommentById(commentId));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CommentDto> getAllCommentsFromEvent(Long eventId) {
         checkEvent(eventId);
         List<Comment> comments = commentRepository.findAllByEventId(eventId);

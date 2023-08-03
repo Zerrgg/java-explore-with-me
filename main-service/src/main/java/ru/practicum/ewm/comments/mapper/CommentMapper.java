@@ -20,19 +20,3 @@ public interface CommentMapper {
     @Mapping(source = "event.id", target = "eventId")
     CommentDto toCommentDto(Comment comment);
 }
-
-//
-//    default CommentDto toCommentDto(Comment comment) {
-//        return CommentDto.builder()
-//                .id(comment.getId())
-//                .text(comment.getText())
-//                .author(UserShortDto.builder()
-//                        .id(comment.getAuthor().getId())
-//                        .name(comment.getAuthor().getName())
-//                        .build())
-//                .eventId(comment.getEvent().getId())
-//                .createdOn(comment.getCreatedOn())
-//                .editedOn(comment.getEditedOn())
-//                .build();
-//    }
-//}

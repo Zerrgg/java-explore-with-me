@@ -76,9 +76,6 @@ public class Event {
     @Column(name = "published_on")
     LocalDateTime publishedOn;
 
-    @Column(name = "views")
-    Long views;
-
     @OneToMany(mappedBy = "event")
     List<Comment> comments;
 
