@@ -30,10 +30,7 @@ import ru.practicum.ewm.user.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static ru.practicum.ewm.dto.GlobalConstants.DT_FORMATTER;
@@ -49,20 +46,8 @@ public class EventServiceImpl implements EventService {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
 
-
-    private Integer getCountUniqueViews(HttpServletRequest request) {
-        String[] uris = new String[]{request.getRequestURI()};
-
-        List<ViewStatsDto> response = statsClient.getStats(
-                LocalDateTime.now().minusYears(100).format(DT_FORMATTER),
-                LocalDateTime.now().plusHours(1).format(DT_FORMATTER),
-                true,
-                uris);
-        return response.size();
-
-    }
-
     @Override
+    @Transactional(readOnly = true)
     public List<EventFullDto> getEventsByAdmin(List<Long> users, List<EventState> states, List<Long> categories,
                                                LocalDateTime rangeStart, LocalDateTime rangeEnd, Integer from, Integer size) {
         log.info("Вывод событий на запрос администратора");
@@ -147,6 +132,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventShortDto> getAllEventsByPrivate(Long userId, Pageable pageable) {
         log.info("Вывод всех событий пользователя с id {}", userId);
         checkUser(userId);
@@ -174,6 +160,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public EventFullDto getEventByPrivate(Long userId, Long eventId) {
         log.info("Вывод события по id {}, созданного пользователем с id {}", eventId, userId);
         checkUser(userId);
@@ -253,6 +240,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventShortDto> getListEventsByPublic(
             String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart, LocalDateTime rangeEnd,
             Boolean onlyAvailable, EventSortType sort, Integer from, Integer size, HttpServletRequest request) {
@@ -304,6 +292,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public EventFullDto getEventByPublic(Long eventId, HttpServletRequest request) {
         log.info("Вывод события с id {} на публичный запрос", eventId);
 
@@ -314,8 +303,6 @@ public class EventServiceImpl implements EventService {
             throw new NotFoundException("Событие с таким id не опубликовано.");
         }
 
-        Integer oldCountHit = getCountUniqueViews(request);
-
         statsClient.addHit(EndpointHitDto.builder()
                 .app("main-service")
                 .uri(request.getRequestURI())
@@ -323,18 +310,11 @@ public class EventServiceImpl implements EventService {
                 .timestamp(LocalDateTime.now().format(DT_FORMATTER))
                 .build());
 
-        Integer newCountHit = getCountUniqueViews(request);
-
-        if (newCountHit > oldCountHit) {
-            exsistEvent.setViews(exsistEvent.getViews() + 1);
-            eventRepository.save(exsistEvent);
-        }
-
-        return EventMapper.INSTANCE.toEventFullDto(exsistEvent);
-
+        return getEventFullDtos(exsistEvent);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Event> getEventsByIds(List<Long> eventsId) {
         log.info("Вывод списка событий с ids {}", eventsId);
 
@@ -404,5 +384,34 @@ public class EventServiceImpl implements EventService {
 
     private List<Event> getEventsBeforeRangeEnd(List<Event> events, LocalDateTime rangeEnd) {
         return events.stream().filter(event -> event.getEventDate().isBefore(rangeEnd)).collect(Collectors.toList());
+    }
+
+    private EventFullDto getEventFullDtos(Event event) {
+        EventFullDto eventDto = EventMapper.INSTANCE.toEventFullDto(event);
+        eventDto.setConfirmedRequests(event.getConfirmedRequests());
+        eventDto.setViews(getViewStatsById(event.getId()));
+        return eventDto;
+    }
+
+    private Long getViewStatsById(Long eventId) {
+        String uri = "/events/" + eventId.toString();
+        String[] uris = new String[1];
+        uris[0] = uri;
+        List<ViewStatsDto> viewStats = statsClient.getStats(LocalDateTime.now().minusYears(1L).format(DT_FORMATTER),
+                LocalDateTime.now().plusYears(1L).format(DT_FORMATTER), true, uris);
+        Map<Long, Long> map = viewStats.stream()
+                .filter(statRecord -> statRecord.getApp().equals("main-service"))
+                .collect(Collectors.toMap(
+                                statRecord -> parseId(statRecord.getUri()),
+                                ViewStatsDto::getHits
+                        )
+                );
+        return map.getOrDefault(eventId, 0L);
+    }
+
+    private Long parseId(String str) {
+        int index = str.lastIndexOf('/');
+        String strId = str.substring(index + 1);
+        return Long.parseLong(strId);
     }
 }

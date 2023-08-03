@@ -153,6 +153,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ParticipationRequestDto> getEventRequestsByRequester(Long userId) {
         checkUser(userId);
 
@@ -160,6 +161,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ParticipationRequestDto> getEventRequestsByEventOwner(Long userId, Long eventId) {
         checkUser(userId);
         Event event = checkEvent(eventId);

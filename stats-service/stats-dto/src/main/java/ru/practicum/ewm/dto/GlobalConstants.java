@@ -20,5 +20,6 @@ public class GlobalConstants {
     public static final int MIN_LENGTH_USER_NAME = 2;
     public static final int MAX_LENGTH_USER_NAME = 250;
     public static final int MAX_LENGTH_TITLE_COMPILATION = 50;
-
+    public static final int MIN_LENGTH_COMMENT = 3;
+    public static final int MAX_LENGTH_COMMENT = 2000;
 }
